@@ -1,0 +1,40 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@element-plus/nuxt": "^1.0.6",
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/tailwindcss": "^6.8.1",
+    "@sidebase/nuxt-auth": "^0.6.0-rc.1",
+    "@types/bcrypt": "^5.0.1",
+    "@vueuse/core": "^10.5.0",
+    "@vueuse/nuxt": "^10.5.0",
+    "bcrypt": "^5.1.1",
+    "element-plus": "^2.4.1",
+    "jalaliday": "^2.3.0",
+    "next-auth": "4.21.1",
+    "nuxt": "^3.8.0",
+    "nuxt-icon": "^0.6.1",
+    "prisma": "^5.5.2",
+    "pug": "^3.0.2",
+    "rtlcss": "^4.1.1",
+    "sass": "^1.69.5",
+    "vite-plugin-pug": "^0.3.2",
+    "vue": "^3.3.7",
+    "vue-router": "^4.2.5",
+    "xlsx": "^0.18.5",
+    "zod": "^3.22.4"
+  },
+  "prisma": {
+    "schema": "./server/db/schema.prisma",
+    "seed": "ts-node ./server/db/seeds/index.ts"
+  }
+}
