@@ -10,34 +10,7 @@ useHead({
   titleTemplate: title => `فارکو :: ${title}`
 })
 const collapse = ref(false)
-const connected:Ref<boolean> = ref(false)
 const loading:Ref<boolean> = ref(true)
-const socketId = ref('')
-const userId = ref(0)
-provide('socket-id', socketId.value)
-provide('user-id', userId.value)
-onMounted(() => {
-  const { $socket } = useNuxtApp()
-  loading.value = true
-  $socket.connect()
-  $socket.on('connect', () => {
-    loading.value = true
-    $socket.emit('register')
-  })
-  $socket.on('registered', (uid:number, sid:string) => {
-    userId.value = uid
-    socketId.value = sid
-    connected.value = true
-    loading.value = false
-  })
-  $socket.on('disconnect', () => {
-    userId.value = 0
-    socketId.value = ''
-    connected.value = false
-    loading.value = false
-    setTimeout(() => { $socket.connect() }, 500)
-  })
-})
 
 </script>
 
@@ -53,8 +26,6 @@ el-config-provider(:locale="locale")
             icon(:name="collapse?'teenyicons:left-outline':'teenyicons:right-outline'" size="15px" )
         //- app-breadcrumb
         el-space
-        truck-scale
-        action-center(@connect="check => connected = !!check")
         user-dropdown
       el-main
         .bg-white.rounded-xl.min-h-full

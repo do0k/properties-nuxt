@@ -39,7 +39,8 @@ export default defineNuxtConfig({
   },
   auth: {
     isEnabled: true,
-    enableGlobalAppMiddleware: true,
+    globalAppMiddleware: true,
+    // @ts-ignore
     addDefaultCallbackUrl: false,
     globalMiddlewareOptions: {
       allow404WithoutAuth: true,
