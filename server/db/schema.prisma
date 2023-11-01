@@ -12,14 +12,14 @@ datasource db {
 
 model User {
   id         Int         @id @default(autoincrement())
-  code       Int         @unique
+  code       String      @unique
   otp        String?
   expire     DateTime?   @db.Timestamptz()
   name       String
   mobile     String      @unique
-  createdAt  DateTime    @db.Timestamptz()
+  createdAt  DateTime    @default(now()) @db.Timestamptz()
   updatedAt  DateTime    @updatedAt @db.Timestamptz()
-  daletedAt  DateTime    @db.Timestamptz()
+  daletedAt  DateTime?   @db.Timestamptz()
   properties Property[]
   agreements Agreement[]
   role       UserRole
@@ -40,23 +40,23 @@ model Property {
   collateral  Int
   details     Json?
   address     String
-  createdAt   DateTime    @db.Timestamptz()
+  createdAt   DateTime    @default(now()) @db.Timestamptz()
   updatedAt   DateTime    @updatedAt @db.Timestamptz()
-  daletedAt   DateTime    @db.Timestamptz()
+  daletedAt   DateTime?   @db.Timestamptz()
   agreements  Agreement[]
 }
 
 model Agreement {
-  user       User     @relation(fields: [userId], references: [id])
-  createdAt  DateTime @db.Timestamptz()
-  updatedAt  DateTime @updatedAt @db.Timestamptz()
-  daletedAt  DateTime @db.Timestamptz()
+  user       User      @relation(fields: [userId], references: [id])
+  createdAt  DateTime  @default(now()) @db.Timestamptz()
+  updatedAt  DateTime  @updatedAt @db.Timestamptz()
+  daletedAt  DateTime? @db.Timestamptz()
   userId     Int
-  property   Property @relation(fields: [propertyId], references: [id])
+  property   Property  @relation(fields: [propertyId], references: [id])
   propertyId Int
   details    Json?
-  startAt    DateTime @db.Timestamptz()
-  dueAt      DateTime @db.Timestamptz()
+  startAt    DateTime  @db.Timestamptz()
+  dueAt      DateTime  @db.Timestamptz()
   orders     Order[]
 
   @@id([userId, propertyId, startAt])
@@ -71,7 +71,7 @@ model Payment {
   status    PaymentStatus
   portId    Int
   port      PaymentPort   @relation(fields: [portId], references: [id])
-  createdAt DateTime      @db.Timestamptz()
+  createdAt DateTime      @default(now()) @db.Timestamptz()
   updatedAt DateTime      @updatedAt @db.Timestamptz()
   orderId   Int
   order     Order         @relation(fields: [orderId], references: [id])
@@ -84,7 +84,7 @@ model Order {
   amount     Int
   paid       Boolean   @default(false)
   dueAt      DateTime  @db.Timestamptz()
-  madeAt     DateTime  @db.Timestamptz()
+  madeAt     DateTime  @default(now()) @db.Timestamptz()
   agreement  Agreement @relation(fields: [userId, propertyId, madeAt], references: [userId, propertyId, startAt])
   user       User      @relation(fields: [userId], references: [id])
   payments   Payment[]
@@ -95,7 +95,7 @@ model PaymentPort {
   name      String
   slug      String
   details   Json?
-  createdAt DateTime  @db.Timestamptz()
+  createdAt DateTime  @default(now()) @db.Timestamptz()
   updatedAt DateTime  @updatedAt @db.Timestamptz()
   payments  Payment[]
 }

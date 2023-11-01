@@ -8,7 +8,7 @@ useHead({
   title: 'ورود به سیستم'
 })
 const { signIn } = useAuth()
-const username = ref('')
+const code = ref('')
 const mobile = ref('')
 const passwordInput = ref<null | HTMLInputElement>(null)
 const usernameInput = ref<null | HTMLInputElement>(null)
@@ -17,7 +17,7 @@ const login = async () => {
   loading.value = true
   try {
     const { error, url, ok } = await signIn('daal-auth', {
-      username: username.value,
+      code: code.value,
       mobile: mobile.value,
       redirect: false,
       callbackUrl: undefined

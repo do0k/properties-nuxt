@@ -13,7 +13,11 @@ export default NuxtAuthHandler({
 			id: 'daal-auth',
 			name: 'احراز هویت',
 			type: 'credentials',
-			credentials: {},
+			credentials: {
+				code: {label: 'کدملی', type: 'text'},
+				mobile: {label: 'شماره موبایل', type: 'text'},
+				otp: {label: 'کد تایید', type: 'text'}
+			},
 			authorize: async (credentials: any) => {
 				try {
 					const user = await db.user.findFirst({

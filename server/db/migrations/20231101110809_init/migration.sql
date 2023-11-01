@@ -7,14 +7,14 @@ CREATE TYPE "PaymentStatus" AS ENUM ('DONE', 'PENDING', 'RETURNED', 'CANCELED', 
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
-    "code" INTEGER NOT NULL,
+    "code" TEXT NOT NULL,
     "otp" TEXT,
     "expire" TIMESTAMPTZ,
     "name" TEXT NOT NULL,
     "mobile" TEXT NOT NULL,
-    "createdAt" TIMESTAMPTZ NOT NULL,
+    "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMPTZ NOT NULL,
-    "daletedAt" TIMESTAMPTZ NOT NULL,
+    "daletedAt" TIMESTAMPTZ,
     "role" "UserRole" NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -33,18 +33,18 @@ CREATE TABLE "Property" (
     "collateral" INTEGER NOT NULL,
     "details" JSONB,
     "address" TEXT NOT NULL,
-    "createdAt" TIMESTAMPTZ NOT NULL,
+    "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMPTZ NOT NULL,
-    "daletedAt" TIMESTAMPTZ NOT NULL,
+    "daletedAt" TIMESTAMPTZ,
 
     CONSTRAINT "Property_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Agreement" (
-    "createdAt" TIMESTAMPTZ NOT NULL,
+    "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMPTZ NOT NULL,
-    "daletedAt" TIMESTAMPTZ NOT NULL,
+    "daletedAt" TIMESTAMPTZ,
     "userId" INTEGER NOT NULL,
     "propertyId" INTEGER NOT NULL,
     "details" JSONB,
@@ -62,7 +62,7 @@ CREATE TABLE "Payment" (
     "date" TIMESTAMPTZ NOT NULL,
     "status" "PaymentStatus" NOT NULL,
     "portId" INTEGER NOT NULL,
-    "createdAt" TIMESTAMPTZ NOT NULL,
+    "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMPTZ NOT NULL,
     "orderId" INTEGER NOT NULL,
 
@@ -77,7 +77,7 @@ CREATE TABLE "Order" (
     "amount" INTEGER NOT NULL,
     "paid" BOOLEAN NOT NULL DEFAULT false,
     "dueAt" TIMESTAMPTZ NOT NULL,
-    "madeAt" TIMESTAMPTZ NOT NULL,
+    "madeAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
@@ -88,7 +88,7 @@ CREATE TABLE "PaymentPort" (
     "name" TEXT NOT NULL,
     "slug" TEXT NOT NULL,
     "details" JSONB,
-    "createdAt" TIMESTAMPTZ NOT NULL,
+    "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMPTZ NOT NULL,
 
     CONSTRAINT "PaymentPort_pkey" PRIMARY KEY ("id")
